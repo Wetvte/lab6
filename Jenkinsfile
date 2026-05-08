@@ -52,7 +52,7 @@ pipeline {
         
     )
 }
-            },
+            }
 
             stage('Clean') {
             steps {
