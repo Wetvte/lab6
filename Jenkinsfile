@@ -1,78 +1,58 @@
 pipeline {
     agent any
+
     parameters {
-        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Окружение для деплоя (dev или prod)')
+        choice(
+            name: 'ENV',
+            choices: ['dev', 'prod'],
+            description: 'Выберите окружение для деплоя'
+        )
     }
+
     stages {
-        stage('Deployment Info') {
+        stage('Prepare') {
             steps {
                 echo "Deploying to ${params.ENV}"
-            }
-        }
-        stage('Clean Workspace') {
-            steps {
                 cleanWs()
             }
         }
+
         stage('Deploy to Server') {
             steps {
                 script {
-                    if (params.ENV == 'prod') {
-                        sshPublisher(
-                            publishers: [
-                            sshPublisherDesc(
-                                configName: "Prod",
-                                transfers: [
-                                sshTransfer(
-                                    sourceFiles: "**/*",
-                                    remoteDirectory: "/app/prod/",
-                                    verbose: true,
-                                    excludes: "",
-                                    flatten: false,
-                                    cleanRemote: false,
-                                    noDefaultExcludes: false,
-                                    makeEmptyDirs: false,
-                                    patternSeparator: "[, ]+"
-                                )
-                            ],
-                                usePromotionTimestamp: false,
-                                useWorkspaceInPromotion: false
-                            )
+                    def serverConfig = [
+                        'dev': [
+                            serverName: 'Dev',
+                            remotePath: '/app/dev'
+                        ],
+                        'prod': [
+                            serverName: 'Prod',
+                            remotePath: '/app/prod'
                         ]
-                        )
-                    } else if (params.ENV == 'dev') {
-                        sshPublisher(
-                            publishers: [
+                    ]
+
+                    def config = serverConfig[params.ENV]
+
+                    sshPublisher(
+                        publishers: [
                             sshPublisherDesc(
-                                configName: "Dev",
+                                configName: config.serverName,
                                 transfers: [
-                                sshTransfer(
-                                    sourceFiles: "**/*",
-                                    remoteDirectory: "/app/dev/",
-                                    verbose: true,
-                                    excludes: "",
-                                    flatten: false,
-                                    cleanRemote: false,
-                                    noDefaultExcludes: false,
-                                    makeEmptyDirs: false,
-                                    patternSeparator: "[, ]+"
-                                )
-                            ],
-                                usePromotionTimestamp: false,
-                                useWorkspaceInPromotion: false
-                            )
-                        ]
-                        )
-                    }
-                }
+                    sshTransfer(
+                        sourceFiles: '**/*',
+                        removePrefix: '',
+                        remoteDirectory: config.remotePath,
+                        usePromotionTimestamp: false,
+                        useWorkspaceInPromotion: false,
+                        flatten: false
+                    )
+                ],
+                execCommand: "cd ${config.remotePath}"
+            )
+        ]
+    )
+}
             }
         }
     }
-post {
-success {
-echo "Deployment to ${params.ENV} completed successfully!"
-        }
-failure {
-echo "Deployment to ${params.ENV} failed!"
-        }
-    }
+}
