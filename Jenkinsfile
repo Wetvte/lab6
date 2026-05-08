@@ -21,13 +21,13 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: "SSH",
+                                    configName: "Prod",
                                     transfers: [
                                         sshTransfer(
                                             sourceFiles: "**/*",
                                             removePrefix: "",
-                                            remoteDirectory: "/app/ssh/",
-                                            execCommand: "systemctl restart app-ssh"
+                                            remoteDirectory: "/app/prod/",
+                                            execCommand: "systemctl restart app-prod"
                                             )
                                     ],
                                     usePromotionTimestamp: false,
