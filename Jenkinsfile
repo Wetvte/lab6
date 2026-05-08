@@ -24,12 +24,10 @@ pipeline {
                                     configName: "Prod",
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: "**/*"
+                                            sourceFiles: "**/*",
+                                            remoteDirectory: "/app/prod/",
                                             )
-                                    ],
-                                    usePromotionTimestamp: false,
-                                    useWorkspaceInPromotion: false,
-                                    verbose: false
+                                    ]
                                 )           
                             ]
                         )
@@ -41,11 +39,9 @@ pipeline {
                                     transfers: [
                                         sshTransfer(
                                             sourceFiles: "**/*"
+                                            remoteDirectory: "/app/dev/",
                                         )
-                                    ],
-                                    usePromotionTimestamp: false,
-                                    useWorkspaceInPromotion: false,
-                                    verbose: false
+                                    ]
                                 )
                             ]
                         )
