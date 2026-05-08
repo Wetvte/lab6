@@ -32,6 +32,7 @@ pipeline {
                                     cleanRemote: false,
                                     noDefaultExcludes: false,
                                     makeEmptyDirs: false,
+                                    patternSeparator: "[, ]+"
                                 )
                             ],
                                 usePromotionTimestamp: false,
@@ -54,6 +55,7 @@ pipeline {
                                     cleanRemote: false,
                                     noDefaultExcludes: false,
                                     makeEmptyDirs: false,
+                                    patternSeparator: "[, ]+"
                                 )
                             ],
                                 usePromotionTimestamp: false,
