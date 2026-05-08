@@ -13,7 +13,6 @@ pipeline {
         stage('Prepare') {
             steps {
                 echo "Deploying to ${params.ENV}"
-                cleanWs()
             }
         }
 
@@ -50,9 +49,17 @@ pipeline {
                 execCommand: "cd ${config.remotePath}"
             )
         ]
+        
     )
 }
+            },
+
+            stage('Clean') {
+            steps {
+                cleanWs()
             }
+        }
+
         }
     }
 }
