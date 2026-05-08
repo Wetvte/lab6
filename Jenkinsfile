@@ -24,10 +24,7 @@ pipeline {
                                     configName: "Prod",
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: "**/*",
-                                            removePrefix: "",
-                                            remoteDirectory: "/app/prod/",
-                                            execCommand: "systemctl restart app-prod"
+                                            sourceFiles: "**/*"
                                             )
                                     ],
                                     usePromotionTimestamp: false,
@@ -43,10 +40,7 @@ pipeline {
                                     configName: "Dev",
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: "**/*",
-                                            removePrefix: "",
-                                            remoteDirectory: "/app/dev/",
-                                            execCommand: "systemctl restart app-dev"
+                                            sourceFiles: "**/*"
                                         )
                                     ],
                                     usePromotionTimestamp: false,
