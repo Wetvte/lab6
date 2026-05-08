@@ -25,7 +25,7 @@ pipeline {
                                     transfers: [
                                         sshTransfer(
                                             sourceFiles: "**/*",
-                                            remoteDirectory: "/app/prod/",
+                                            remoteDirectory: "/app/prod/"
                                             )
                                     ]
                                 )           
@@ -39,7 +39,7 @@ pipeline {
                                     transfers: [
                                         sshTransfer(
                                             sourceFiles: "**/*"
-                                            remoteDirectory: "/app/dev/",
+                                            remoteDirectory: "/app/dev/"
                                         )
                                     ]
                                 )
