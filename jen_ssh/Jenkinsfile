@@ -37,16 +37,16 @@ pipeline {
                             sshPublisherDesc(
                                 configName: config.serverName,
                                 transfers: [
-                    sshTransfer(
-                        sourceFiles: '**/*',
-                        removePrefix: '',
-                        remoteDirectory: config.remotePath,
-                        usePromotionTimestamp: false,
-                        useWorkspaceInPromotion: false,
-                        flatten: false
-                    )
-                ],
-                execCommand: "cd ${config.remotePath}"
+                        sshTransfer(
+                            sourceFiles: '**/*',
+                            removePrefix: '',
+                            remoteDirectory: config.remotePath,
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            flatten: false
+                        )
+                    ],
+                    execCommand: "cd ${config.remotePath}"
             )
         ]
     )

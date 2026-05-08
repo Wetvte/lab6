@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Репозиторий уже клонирован Jenkins (через Pipeline script from SCM)'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Выполняется сборка...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Запуск тестов...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Выполняется деплой...'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Сборка и деплой завершены успешно!'
+        }
+        failure {
+            echo 'Ошибка в процессе сборки или деплоя!'
+        }
+    }
+}
