@@ -20,42 +20,57 @@ pipeline {
                     if (params.ENV == 'prod') {
                         sshPublisher(
                             publishers: [
-                                sshPublisherDesc(
-                                    configName: "Prod",
-                                    transfers: [
-                                        sshTransfer(
-                                            sourceFiles: "**/*",
-                                            remoteDirectory: "/app/prod/"
-                                            )
-                                    ]
-                                )           
-                            ]
+                            sshPublisherDesc(
+                                configName: "Prod",
+                                transfers: [
+                                sshTransfer(
+                                    sourceFiles: "**/*",
+                                    remoteDirectory: "/app/prod/",
+                                    verbose: true,
+                                    excludes: "",
+                                    flatten: false,
+                                    cleanRemote: false,
+                                    noDefaultExcludes: false,
+                                    makeEmptyDirs: false,
+                                )
+                            ],
+                                usePromotionTimestamp: false,
+                                useWorkspaceInPromotion: false
+                            )
+                        ]
                         )
                     } else if (params.ENV == 'dev') {
                         sshPublisher(
                             publishers: [
-                                sshPublisherDesc(
-                                    configName: "Dev",
-                                    transfers: [
-                                        sshTransfer(
-                                            sourceFiles: "**/*",
-                                            remoteDirectory: "/app/dev/"
-                                        )
-                                    ]
+                            sshPublisherDesc(
+                                configName: "Dev",
+                                transfers: [
+                                sshTransfer(
+                                    sourceFiles: "**/*",
+                                    remoteDirectory: "/app/dev/",
+                                    verbose: true,
+                                    excludes: "",
+                                    flatten: false,
+                                    cleanRemote: false,
+                                    noDefaultExcludes: false,
+                                    makeEmptyDirs: false,
                                 )
-                            ]
+                            ],
+                                usePromotionTimestamp: false,
+                                useWorkspaceInPromotion: false
+                            )
+                        ]
                         )
                     }
                 }
             }
         }
     }
-    post {
-        success {
-            echo "Deployment to ${params.ENV} completed successfully!"
+post {
+success {
+echo "Deployment to ${params.ENV} completed successfully!"
         }
-        failure {
-            echo "Deployment to ${params.ENV} failed!"
+failure {
+echo "Deployment to ${params.ENV} failed!"
         }
     }
-}
