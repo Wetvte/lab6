@@ -38,7 +38,7 @@ pipeline {
                                     configName: "Dev",
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: "**/*"
+                                            sourceFiles: "**/*",
                                             remoteDirectory: "/app/dev/"
                                         )
                                     ]
