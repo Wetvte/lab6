@@ -49,17 +49,16 @@ pipeline {
                 execCommand: "cd ${config.remotePath}"
             )
         ]
-        
     )
 }
             }
-
-            stage('Clean') {
+        }
+        
+        stage('Cleanup') {
             steps {
                 cleanWs()
+                echo 'Cleanup completed successfully.'
             }
-        }
-
         }
     }
 }
